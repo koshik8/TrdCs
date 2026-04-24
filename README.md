@@ -64,20 +64,20 @@ Final model outcome:
 
 | Lambda | Test Accuracy | Sparsity (%) |
 |--------|--------------|-------------|
-| 0.10   | High         | Low         |
-| 0.25   | Best balance | Moderate    |
-| 0.55   | Lower        | High        |
+| 0.10   | 73.86%       | 60.78%      |
+| 0.25   | 73.45%       | 70.76%      |
+| 0.55   | 71.02%       | 81.99%      |
 
 Observation:
 - Increasing λ increases sparsity but reduces accuracy  
-- λ = 0.25 gives the best trade-off  
+- λ = 0.25 gives the best trade-off
+  
+![Accuracy vs Sparsity Trade-off](accuracy_sparsity_tradeoff.png)
 
 ## 7. Gate Distribution
-The gate histogram shows:
-- A strong spike near 0 → pruned weights  
-- Remaining values away from 0 → important connections  
+The gate values are concentrated around the threshold (~0.5), indicating that the model is learning a fine-grained pruning boundary rather than aggressively collapsing gates to zero. This results in controlled sparsity, where pruning decisions are sensitive to small variations in gate values, enabling a better accuracy–sparsity trade-off.
 
-This confirms successful self-pruning behavior.
+![Gate Distribution](gate_distribution.png)
 
 ## 8. Conclusion
 The model successfully learns to prune itself during training using gate-based regularization. The sparsity–accuracy trade-off is effectively controlled by λ. The final design produces a compressed and efficient network without requiring post-processing pruning.
